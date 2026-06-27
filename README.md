@@ -82,19 +82,6 @@ cd ../frontend
 npm install
 ```
 
-### Configuration
-
-```bash
-cd backend
-cp .env.example .env
-```
-
-Edit `backend/.env`:
-```env
-GEMINI_API_KEY=your_api_key_here
-PORT=3001
-```
-
 ### Run Locally
 
 ```bash
@@ -106,41 +93,6 @@ npm run dev
 cd frontend
 npm run dev
 ```
-
-Open **http://localhost:5173**
-
----
-
-## API
-
-### `POST /api/summarize`
-
-**Request:**
-```json
-{
-  "url": "https://www.youtube.com/watch?v=VIDEO_ID",
-  "level": "medium"
-}
-```
-
-`level` options: `"short"`, `"medium"`, `"detailed"`
-
-**Response:**
-```json
-{
-  "title": "Video Title",
-  "shortSummary": "100-word overview",
-  "detailedSummary": "Detailed multi-paragraph summary",
-  "keyPoints": ["Point 1", "Point 2"],
-  "timestamps": [{"time": "0:00", "description": "Intro"}],
-  "actionItems": ["Action 1"],
-  "quotes": ["Notable quote"],
-  "faqs": [{"question": "Q?", "answer": "A."}],
-  "transcript": [{"text": "...", "offset": 0, "duration": 5000}]
-}
-```
-
----
 
 ## Deployment
 

@@ -103,7 +103,6 @@ npm run dev
 | Live streams | No transcript available |
 | Free tier | 20 requests/day |
 | Very short videos (< 2 min) | Fewer sections generated |
-| Very long videos (2+ hours) | Sampled from 5 sections, not word-for-word |
 
 ---
 

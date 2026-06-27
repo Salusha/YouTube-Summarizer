@@ -94,23 +94,6 @@ cd frontend
 npm run dev
 ```
 
-## Deployment
-
-### Backend → Render
-
-- **Root Directory:** `backend`
-- **Build Command:** `npm install`
-- **Start Command:** `npm start`
-- **Environment Variables:** `GEMINI_API_KEY`, `FRONTEND_URL`, `NODE_ENV=production`
-
-### Frontend → Vercel
-
-- **Root Directory:** `frontend`
-- **Framework:** Vite
-- **Environment Variables:** `VITE_API_URL` (your Render backend URL)
-
----
-
 ## Constraints
 
 | Constraint | Reason |

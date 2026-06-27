@@ -13,40 +13,7 @@ import summarizeRoutes from "./routes/summarize.routes.js";
 const app = express();
 
 // --- CORS Configuration ---
-// Allow requests from the Vercel frontend and local dev server
-const allowedOrigins = [
-  "http://localhost:5173", // Vite dev server
-  "http://localhost:4173", // Vite preview
-];
-
-// Add production frontend URL if configured
-if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
-}
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (mobile apps, curl, server-to-server)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      // In production, reject unknown origins
-      if (process.env.NODE_ENV === "production") {
-        return callback(new Error("Not allowed by CORS"), false);
-      }
-
-      // In development, allow all origins
-      return callback(null, true);
-    },
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 // --- Middleware ---
 app.use(express.json({ limit: "1mb" })); // Parse JSON with size limit

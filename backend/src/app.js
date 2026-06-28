@@ -11,8 +11,26 @@ import summarizeRoutes from "./routes/summarize.routes.js";
 
 const app = express();
 
-// Allow all origins — no CORS issues between Vercel and Render
-app.use(cors());
+// --- CORS Configuration ---
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (curl, mobile apps, health checks)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(null, false);
+  },
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 // Parse JSON request bodies
 app.use(express.json({ limit: "1mb" }));

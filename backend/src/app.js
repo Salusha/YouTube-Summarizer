@@ -1,9 +1,8 @@
 /**
  * Express Application Configuration
  *
- * Sets up middleware (CORS, JSON parsing) and mounts routes.
- * CORS is configured for production (Vercel frontend) and local development.
- * Includes a global error handler for consistent error responses.
+ * CORS open for all origins (Vercel, localhost, any client).
+ * JSON parsing, routes, and global error handler.
  */
 
 import express from "express";
@@ -12,29 +11,32 @@ import summarizeRoutes from "./routes/summarize.routes.js";
 
 const app = express();
 
-// --- CORS Configuration ---
+// Allow all origins — no CORS issues between Vercel and Render
 app.use(cors());
 
-// --- Middleware ---
-app.use(express.json({ limit: "1mb" })); // Parse JSON with size limit
+// Parse JSON request bodies
+app.use(express.json({ limit: "1mb" }));
 
-// --- Routes ---
+// Routes
 app.use("/api", summarizeRoutes);
 
-// Health check endpoint (used by Render for zero-downtime deploys)
+// Health check (Render uses this for zero-downtime deploys)
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// --- Global Error Handler ---
+// Root route (so "Cannot GET /" doesn't confuse people)
+app.get("/", (_req, res) => {
+  res.json({ message: "YouTube Summarizer API", docs: "POST /api/summarize" });
+});
+
+// Global error handler
 app.use((err, _req, res, _next) => {
   console.error(`[ERROR] ${err.message}`);
-
   const statusCode = err.statusCode || 500;
   const message = err.statusCode
     ? err.message
     : "An internal server error occurred. Please try again later.";
-
   res.status(statusCode).json({ error: message });
 });
 
